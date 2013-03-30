@@ -4,10 +4,10 @@ spring-context-event-sync
 Demonstration of event object syncing between multiple Spring contexts via RabbitMQ (Proof-Of-Concept). All events were be dispatched with Spring's ApplicationEventPublisher.
 
 # How it works
-1. Each `DistributedEvent` will be transformed in a serializable DTO pojo and sent to a RabbitMQ exchange fanout. 
+1. Each `DistributedEvent` will be transformed in a serializable DTO (`DistributedEventDTO`) pojo and sent to a RabbitMQ exchange fanout. 
 2. All running contexts have themselfes registered and bounded a temporarily queue to that exchange fanout. 
-3. Using this fanout, all bounded queues will get a message which is a DTO of the DistributedEvent object.
-4. All contexts get this message, transformed it back to an event and publish them via Spring's EventPublisher.
+3. Using this fanout, all bounded queues will get a message which is a DTO of the `DistributedEvent` object.
+4. All contexts get this message, transformed it back to an event and publish them via Spring's `ApplicationEventPublisher`.
 
 This means that the context will receive its "own" event via RabbitMQ.
 
