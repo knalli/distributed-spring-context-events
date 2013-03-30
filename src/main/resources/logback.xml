@@ -1,0 +1,27 @@
+<configuration debug="false" scan="true">
+
+    <contextName>tz-backend</contextName>
+
+    <!-- read by resource (in classpath) -->
+    <property resource="application.properties"/>
+
+    <!-- Enable this to see logback messages -->
+    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>-->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- date: same as iso but w/o the current day -->
+            <pattern>%date{HH:mm:ss.SSS} %-20([%thread]) %-5level %logger{32} - %msg %ex{full}%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="de.knallisworld" level="info"></logger>
+    <logger name="de.knallisworld.springcontextsync.event.integration.MqEventReceiver" level="info"></logger>
+
+    <logger name="org.springframework.integration" level="warn"></logger>
+
+    <root level="warn">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
