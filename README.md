@@ -1,7 +1,7 @@
 spring-context-event-sync
 =========================
 
-Demonstration of event object syncing between multiple Spring contexts via RabbitMQ (Proof-Of-Concept)
+Demonstration of event object syncing between multiple Spring contexts via RabbitMQ (Proof-Of-Concept). All events were be dispatched with Spring's ApplicationEventPublisher.
 
 # How to use
 Start the application with the `Main.java` found in the base package `de.knallisworld.springcontextsync`. You can start multiple instances in parallel.
