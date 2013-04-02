@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class DistributedEventDTO implements Serializable {
 
+	private static final long serialVersionUID = -8601169610715425690L;
+
 	private long timestamp;
 
 	private String userId;
