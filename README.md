@@ -1,5 +1,5 @@
-spring-context-event-sync
-=========================
+Distributed Spring Context Events
+=================================
 
 Demonstration of event object syncing between multiple Spring contexts via RabbitMQ (Proof-Of-Concept). All events were be dispatched with Spring's ApplicationEventPublisher.
 
