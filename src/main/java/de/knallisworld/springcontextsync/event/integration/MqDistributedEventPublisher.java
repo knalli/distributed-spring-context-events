@@ -54,6 +54,11 @@ public class MqDistributedEventPublisher implements DistributedEventPublisher {
 			LOGGER.debug("Publishing (appId={})...", event.getApplicationId());
 		}
 
-		sender.send(event);
+		try {
+			sender.send(event);
+
+		} catch (Exception e) {
+			LOGGER.warn("Could not send event over MQ. Service down? Original reason: " + e.getMessage());
+		}
 	}
 }
