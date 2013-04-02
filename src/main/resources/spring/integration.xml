@@ -19,11 +19,11 @@
        http://www.springframework.org/schema/integration/stream
        http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
 
     <beans>
-        <int-stream:stderr-channel-adapter channel="errorChannel" append-newline="true"/>
-
         <int:channel id="mqEventOutChannel"/>
         <int:channel id="mqEventOutChannelJson"/>
         <int:channel id="mqEventInChannel"/>
@@ -36,8 +36,9 @@
                                    password="${rabbitmq.password}" virtual-host="${rabbitmq.virtualhost}"/>
         <rabbit:admin connection-factory="connectionFactory"/>
 
-        <util:property-path id="applicationId" path="application.id" />
-        <rabbit:queue id="eventQueue" name="${rabbitmq.springevents.queue}.#{applicationId}" auto-delete="true" durable="true" exclusive="true">
+        <util:property-path id="applicationId" path="application.id"/>
+        <rabbit:queue id="eventQueue" name="${rabbitmq.springevents.queue}.#{applicationId}" auto-delete="true"
+                      durable="true" exclusive="true">
             <rabbit:queue-arguments>
                 <!-- Attention if you want to declare mixed value types: https://jira.springsource.org/browse/AMQP-198 -->
                 <entry key="x-message-ttl">
@@ -46,7 +47,8 @@
             </rabbit:queue-arguments>
         </rabbit:queue>
 
-        <rabbit:fanout-exchange id="eventFanoutExchange" name="${rabbitmq.springevents.exchange.fanout}" durable="true" auto-delete="true">
+        <rabbit:fanout-exchange id="eventFanoutExchange" name="${rabbitmq.springevents.exchange.fanout}" durable="true"
+                                auto-delete="true">
             <rabbit:bindings>
                 <rabbit:binding queue="eventQueue"/>
             </rabbit:bindings>
@@ -60,11 +62,12 @@
 
         <!-- Receiving -->
         <int-amqp:inbound-channel-adapter connection-factory="connectionFactory" channel="mqEventInChannelJson"
-                                          queue-names="${rabbitmq.springevents.queue}.#{applicationId}" prefetch-count="10" tx-size="10"/>
+                                          queue-names="${rabbitmq.springevents.queue}.#{applicationId}"
+                                          prefetch-count="10" tx-size="10" error-channel="errorChannel"/>
 
         <!-- Sending -->
         <int-amqp:outbound-channel-adapter channel="mqEventOutChannelJson" amqp-template="amqpTemplate" routing-key=""
-                                           exchange-name="${rabbitmq.springevents.exchange.fanout}" />
+                                           exchange-name="${rabbitmq.springevents.exchange.fanout}"/>
     </beans>
 
     <beans profile="mq">
@@ -74,7 +77,7 @@
                      default-request-channel="mqEventOutChannel"
                      default-reply-channel="nullChannel"/>
         <int:chain input-channel="mqEventOutChannel" output-channel="mqEventOutChannelJson">
-            <int:transformer ref="distributedEventTransformer" />
+            <int:transformer ref="distributedEventTransformer"/>
             <int:object-to-json-transformer/>
         </int:chain>
 
@@ -84,7 +87,7 @@
 
         <int:chain input-channel="mqEventInChannelJson" output-channel="mqEventInChannel">
             <int:json-to-object-transformer type="de.knallisworld.springcontextsync.event.DistributedEventDTO"/>
-            <int:transformer ref="distributedEventTransformer" />
+            <int:transformer ref="distributedEventTransformer"/>
         </int:chain>
     </beans>
 
