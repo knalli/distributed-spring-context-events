@@ -69,14 +69,12 @@
 
     <beans profile="mq">
 
-        <bean id="transformers" class="de.knallisworld.springcontextsync.event.integration.DistributedEventTransformer"/>
-
         <!-- Sending -->
         <int:gateway service-interface="de.knallisworld.springcontextsync.event.integration.MqEventSender"
                      default-request-channel="mqEventOutChannel"
                      default-reply-channel="nullChannel"/>
         <int:chain input-channel="mqEventOutChannel" output-channel="mqEventOutChannelJson">
-            <int:transformer ref="transformers" method="toDTO"/>
+            <int:transformer ref="distributedEventTransformer" />
             <int:object-to-json-transformer/>
         </int:chain>
 
@@ -86,7 +84,7 @@
 
         <int:chain input-channel="mqEventInChannelJson" output-channel="mqEventInChannel">
             <int:json-to-object-transformer type="de.knallisworld.springcontextsync.event.DistributedEventDTO"/>
-            <int:transformer ref="transformers" method="fromDTO"/>
+            <int:transformer ref="distributedEventTransformer" />
         </int:chain>
     </beans>
 
