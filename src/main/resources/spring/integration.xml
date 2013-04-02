@@ -89,6 +89,9 @@
             <int:json-to-object-transformer type="de.knallisworld.springcontextsync.event.DistributedEventDTO"/>
             <int:transformer ref="distributedEventTransformer"/>
         </int:chain>
+
+        <!-- Logging errors -->
+        <int:service-activator ref="mqDistributedEventExceptionHandler" input-channel="errorChannel"/>
     </beans>
 
     <!-- Enable optional debugging stuff-->
