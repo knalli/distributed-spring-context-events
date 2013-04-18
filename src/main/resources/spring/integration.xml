@@ -63,7 +63,7 @@
         <!-- Receiving -->
         <int-amqp:inbound-channel-adapter connection-factory="connectionFactory" channel="mqEventInChannelJson"
                                           queue-names="${rabbitmq.springevents.queue}.#{applicationId}"
-                                          prefetch-count="10" tx-size="10" error-channel="errorChannel"/>
+                                          prefetch-count="10" tx-size="10" error-channel="errorChannel" acknowledge-mode="NONE"/>
 
         <!-- Sending -->
         <int-amqp:outbound-channel-adapter channel="mqEventOutChannelJson" amqp-template="amqpTemplate" routing-key=""
