@@ -75,7 +75,7 @@
         <!-- Sending -->
         <int:gateway service-interface="de.knallisworld.springcontextsync.event.integration.MqEventSender"
                      default-request-channel="mqEventOutChannel"
-                     default-reply-channel="nullChannel"/>
+                     default-reply-channel="nullChannel" error-channel="errorChannel"/>
         <int:chain input-channel="mqEventOutChannel" output-channel="mqEventOutChannelJson">
             <int:transformer ref="distributedEventTransformer"/>
             <int:object-to-json-transformer/>
