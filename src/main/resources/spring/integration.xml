@@ -78,7 +78,7 @@
                      default-reply-channel="nullChannel" error-channel="errorChannel"/>
         <int:chain input-channel="mqEventOutChannel" output-channel="mqEventOutChannelJson">
             <int:transformer ref="distributedEventTransformer"/>
-            <int:object-to-json-transformer/>
+            <int:object-to-json-transformer content-type="text/json"/>
         </int:chain>
 
         <!-- Receiving -->
