@@ -24,6 +24,3 @@ The configuration of the Spring Integration can be found in `resources/spring/in
 # License
 Copyright 2013 by Jan Philipp. Licensed under MIT.
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/knalli/distributed-spring-context-events/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
